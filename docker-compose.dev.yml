@@ -1,0 +1,101 @@
+version: "3.9"
+
+x-syslog-driver: &syslog-driver
+  logging:
+    driver: syslog
+    options:
+      syslog-address: "udp://rsyslog:514"
+      tag: "{{.Name}}/{{.ID}}"
+
+x-jsonlog-driver: &jsonlog-driver
+  logging:
+    driver: "json-file"
+
+x-common: &common
+  restart: unless-stopped
+  stdin_open: true
+  tty: true
+
+x-app-root: &app-root
+  APP_ROOT: /app
+
+x-args: &args
+  args:
+    <<: *app-root
+    NODE_MAJOR: 16
+    NEST_CLI_VERSION: 8.2.4
+    NG_CLI_VERSION: 13.3.1
+    ENVIRONMENT: development
+    APP_HOSTNAME: localhost
+
+x-envs: &envs
+  environment:
+    - TZ=Asia/Krasnoyarsk
+
+x-app: &app
+  <<: *common
+  <<: *envs
+  image:  rooms-js-app--development
+  build:
+    <<: *args
+    context: .
+    dockerfile: ./.docker/Dockerfiles/app.dev.Dockerfile
+  volumes:
+    - ./:/app
+    - backend-node_modules:/app/backend/node_modules
+    - frontend-node_modules:/app/frontend/node_modules
+    - ./.docker/user.conf/.gitconfig:/root/.gitconfig
+  networks:
+    - rooms-js--development
+  tmpfs:
+    - /tmp
+
+services:
+  runner:
+    <<: *app
+    container_name: rooms-js-runner--development
+    command: /bin/bash
+
+  backend:
+    <<: *app
+    <<: *jsonlog-driver
+#    <<: *syslog-driver
+    container_name: rooms-js-backend--development
+    working_dir: /app/backend
+    command: yarn start:debug
+    ports:
+      - "30044:3000"
+
+  frontend:
+    <<: *app
+    <<: *jsonlog-driver
+#    <<: *syslog-driver
+    container_name: rooms-js-frontend--development
+    working_dir: /app/frontend
+    command: yarn start
+    ports:
+      - "42044:4200"
+
+  webserver:
+    <<: *jsonlog-driver
+#    <<: *syslog-driver
+    <<: *common
+    build:
+      context: .
+      dockerfile: .docker/Dockerfiles/webserver.dev.Dockerfile
+    container_name: rooms-js-webserver--development
+    ports:
+      - "28044:80"
+      - "24044:443"
+    volumes:
+      - ./:/app
+    networks:
+      - rooms-js--development
+
+
+volumes:
+  backend-node_modules:
+  frontend-node_modules:
+
+networks:
+  rooms-js--development:
