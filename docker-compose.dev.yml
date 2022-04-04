@@ -44,7 +44,6 @@ x-app: &app
     - ./:/app
     - backend-node_modules:/app/backend/node_modules
     - frontend-node_modules:/app/frontend/node_modules
-    - ./.docker/user.conf/.gitconfig:/root/.gitconfig
   networks:
     - rooms-js--development
   tmpfs:
