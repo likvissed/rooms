@@ -61,9 +61,11 @@ services:
 #    <<: *syslog-driver
     container_name: rooms-js-backend--development
     working_dir: /app/backend
-    command: yarn start:debug
     ports:
       - "30044:3000"
+    depends_on:
+      - database
+    command: yarn start:debug
 
   frontend:
     <<: *app
@@ -71,9 +73,11 @@ services:
 #    <<: *syslog-driver
     container_name: rooms-js-frontend--development
     working_dir: /app/frontend
-    command: yarn start
     ports:
       - "42044:4200"
+    depends_on:
+      - backend
+    command: yarn start
 
   webserver:
     <<: *jsonlog-driver
@@ -90,6 +94,8 @@ services:
       - ./:/app
     networks:
       - rooms-js--development
+    depends_on:
+      - frontend
 
   database:
     <<: *jsonlog-driver
@@ -105,7 +111,7 @@ services:
     ports:
       - "44039:3306"
     volumes:
-      - mysql:/var/lib/mysql
+      - mysql-data:/var/lib/mysql
     networks:
       - rooms-js--development
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
@@ -114,6 +120,7 @@ services:
 volumes:
   backend-node_modules:
   frontend-node_modules:
+  mysql-data:
 
 networks:
   rooms-js--development:
