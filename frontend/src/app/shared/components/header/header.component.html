@@ -1,4 +1,6 @@
 <mat-toolbar>
+  <button mat-icon-button (click)="isExpanded = !isExpanded"><mat-icon>menu</mat-icon></button>
+
   <img class="image-logo" src="assets/images/logo-iss.svg">
 
   <span class="navbar-title">
@@ -7,3 +9,41 @@
 
   <span class="indent"></span>
 </mat-toolbar>
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav class="text-sidenav" mode="side" opened="true" (mouseenter)="mouseenter()" (mouseleave)="mouseleave()">
+    <mat-nav-list>
+      <mat-list-item>
+        <span class="full-width" *ngIf="isExpanded || isShowing"> Площадки </span>
+        <mat-icon mat-list-icon> home </mat-icon>
+      </mat-list-item>
+
+      <mat-list-item>
+        <span class="full-width" *ngIf="isExpanded || isShowing"> Корпуса </span>
+        <mat-icon mat-list-icon> dashboard </mat-icon>
+      </mat-list-item>
+
+      <mat-list-item>
+        <span class="full-width" *ngIf="isExpanded || isShowing"> Комнаты </span>
+        <mat-icon mat-list-icon> room </mat-icon>
+      </mat-list-item>
+
+      <mat-list-item>
+        <span class="full-width" *ngIf="isExpanded || isShowing"> Категории </span>
+        <mat-icon mat-list-icon> lock </mat-icon>
+      </mat-list-item>
+
+      <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent">
+        <span class="full-width" *ngIf="isExpanded || isShowing"> Администрирование </span>
+        <mat-icon mat-list-icon> settings </mat-icon>
+        <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubmenu}" *ngIf="isExpanded || isShowing">expand_more</mat-icon>
+      </mat-list-item>
+      <div class="submenu" [ngClass]="{'expanded' : showSubmenu}" *ngIf="isShowing || isExpanded">
+        <a mat-list-item href="..."> Пользователи </a>
+        <a mat-list-item href="..."> История </a>
+      </div>
+
+    </mat-nav-list>
+  </mat-sidenav>
+
+</mat-sidenav-container>
