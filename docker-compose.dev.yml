@@ -91,6 +91,25 @@ services:
     networks:
       - rooms-js--development
 
+  database:
+    <<: *jsonlog-driver
+#    <<: *syslog-driver
+    <<: *common
+    image: mysql:5.7
+    container_name: rooms-js-database--development
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "44039:3306"
+    volumes:
+      - mysql:/var/lib/mysql
+    networks:
+      - rooms-js--development
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+
 
 volumes:
   backend-node_modules:
