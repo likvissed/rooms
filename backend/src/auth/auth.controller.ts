@@ -14,9 +14,7 @@ export class AuthController {
 
     return this.authService.getToken(body.code)
           .pipe(
-            switchMap(access_token => {
-              return this.authService.getUserInfo(access_token)
-            }),
+            switchMap(access_token => this.authService.getUserInfo(access_token)),
             map(data => {
               res.send(this.authService.generateJwt(data));
             })

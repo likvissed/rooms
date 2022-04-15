@@ -39,16 +39,7 @@ export default class AuthService {
   }
 
   generateJwt(user_data) {
-    const payload = {
-      id_tn: user_data['id_tn'],
-      tn: user_data['tn'],
-      dept: user_data['dept'],
-      fio: user_data['fio'],
-      tel: user_data['tel'],
-      email: user_data['email'],
-      fio_initials: user_data['fio_initials'],
-      login: user_data['login']
-    }
+    const payload = Object.assign({}, user_data)
 
     return {
       token: this.jwtService.sign(payload)
