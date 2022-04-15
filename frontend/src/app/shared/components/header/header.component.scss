@@ -56,3 +56,16 @@
 .submenu.expanded {
   transform: scaleY(1);
 }
+
+
+.header-user {
+  text-decoration: none;
+  line-height: 25px;
+
+  .user-fio {
+    font-size: 16px;
+    vertical-align: super;
+    font-weight: normal;
+  }
+}
+

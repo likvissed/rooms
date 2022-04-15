@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthHelper } from '@iss/ng-auth-center';
 
 @Component({
   selector: 'app-header',
@@ -12,9 +13,26 @@ export class HeaderComponent implements OnInit {
   isShowing = false;
   showSubSubMenu: boolean = false;
 
-  constructor() { }
+  isAuthenticated = false;
+  fio_initials = '';
+
+  constructor(
+    private authHelper: AuthHelper
+  ) { }
 
   ngOnInit(): void {
+    this.authHelper.isAuthenticated$.subscribe(isAuth => {
+      console.log(isAuth);
+      this.isAuthenticated = isAuth;
+
+      if (isAuth) {
+        this.fio_initials = this.authHelper.getJwtPayload()['fio_initials'];
+      }
+    });
+  }
+
+  logout() {
+    this.authHelper.logout();
   }
 
   mouseenter() {

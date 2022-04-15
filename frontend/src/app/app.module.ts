@@ -1,3 +1,4 @@
+import { environment } from './../environments/environment';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -13,16 +14,23 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { MatCardModule } from '@angular/material/card';
+import { HttpClientModule } from '@angular/common/http';
+import { AuthCenterModule } from '@iss/ng-auth-center';
+import { RoomModule } from './room/room.module';
+import { AuthComponent } from './shared/components/auth/auth.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
+    RoomModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatToolbarModule,
@@ -30,7 +38,11 @@ import { MatCardModule } from '@angular/material/card';
     MatListModule,
     MatIconModule,
     MatButtonModule,
-    MatCardModule
+    MatCardModule,
+    HttpClientModule,
+    AuthCenterModule.forRoot(environment.auth),
+    MatTooltipModule
+
     // MaterialModule
   ],
   providers: [],
