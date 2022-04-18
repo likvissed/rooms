@@ -1,9 +1,15 @@
+import { GetUserDto } from './dto/get-user.dto';
+import { GetTokenDto } from './dto/get-token.dto';
 import { HttpService } from '@nestjs/axios';
-import { HttpException, Injectable } from '@nestjs/common';
-import { map } from 'rxjs/operators';
+import { HttpException, Injectable, Logger } from '@nestjs/common';
+import { map, switchMap } from 'rxjs/operators';
 import { JwtService } from '@nestjs/jwt';
 import { of, catchError } from 'rxjs';
+import { GetCodeDto } from './dto/get-code.dto';
 
+/**
+ * Авторизация пользователя через ЛК
+ */
 @Injectable()
 export default class AuthService {
   constructor(
@@ -11,7 +17,16 @@ export default class AuthService {
     private jwtService: JwtService
     ) {}
 
-  getToken(code) {
+  authorize(code: GetCodeDto) {
+    return this.getToken(code)
+      .pipe(
+        switchMap(access_token => this.getUserInfo(access_token)),
+        map(data => this.generateJwt(data))
+      )
+  }
+
+  getToken(code: GetCodeDto) {
+    Logger.error('getToken');
     const params = {
       grant_type: 'authorization_code',
       client_id: process.env.AC_CLIENT_ID,
@@ -26,7 +41,8 @@ export default class AuthService {
       )
   }
 
-  getUserInfo(access_token) {
+  getUserInfo(access_token: GetTokenDto) {
+    Logger.error('getUserInfo', access_token);
     const headers = {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${access_token}`
@@ -38,8 +54,11 @@ export default class AuthService {
       )
   }
 
-  generateJwt(user_data) {
-    const payload = Object.assign({}, user_data)
+  generateJwt(user_data: GetUserDto) {
+    const payload = Object.fromEntries(
+      Object.entries(user_data)
+      .filter(([key]) => ['id_tn', 'tn', 'dept', 'fio', 'tel', 'email', 'fio_initials', 'login'].includes(key))
+    );
 
     return {
       token: this.jwtService.sign(payload)
