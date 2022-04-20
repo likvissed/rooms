@@ -101,7 +101,7 @@ services:
     <<: *jsonlog-driver
 #    <<: *syslog-driver
     <<: *common
-    image: mysql:5.7
+    image: docker-hub-proxy.***REMOVED***/mysql:5.7
     container_name: rooms-js-database--development
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
