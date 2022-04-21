@@ -713,39 +713,6 @@
   dependencies:
     uuid "8.3.2"
 
-"@ngrx/core@^1.2.0":
-  version "1.2.0"
-  resolved "https://nexus.***REMOVED***/repository/npm/@ngrx/core/-/core-1.2.0.tgz#882b46abafa2e0e6d887cb71a1b2c2fa3e6d0dc6"
-  integrity sha1-iCtGq6+i4ObYh8txobLC+j5tDcY=
-
-"@ngrx/effects@^13.1.0":
-  version "13.1.0"
-  resolved "https://nexus.***REMOVED***/repository/npm/@ngrx/effects/-/effects-13.1.0.tgz#06d3fb04e7a37a3176f05054682ba353e8e6dce6"
-  integrity sha512-b0kaC1yly1WawtQils3Bxy2FhE9OwlQD/bptVd3s+bskdZ+iw9VlAMH9Spk2mfX+MyOEOk2FyrWlrOePtkw+7Q==
-  dependencies:
-    tslib "^2.0.0"
-
-"@ngrx/router-store@^13.1.0":
-  version "13.1.0"
-  resolved "https://nexus.***REMOVED***/repository/npm/@ngrx/router-store/-/router-store-13.1.0.tgz#dee6951ecc44c591475920e571d352600e0eddc0"
-  integrity sha512-K1ZES0jjv0JhTillJmEZmkZGzu+FU70MQCnKDr9LCFlNon0bufV/YyrsXRIdKkgudmvB4W9rWca8j6eGDHf1Bw==
-  dependencies:
-    tslib "^2.0.0"
-
-"@ngrx/store-devtools@^13.1.0":
-  version "13.1.0"
-  resolved "https://nexus.***REMOVED***/repository/npm/@ngrx/store-devtools/-/store-devtools-13.1.0.tgz#2bea7d6e4e0e85f23062ff07068e4640f59abf70"
-  integrity sha512-HAF2q1qk7n0Q3rkHncdXIokGXbPFKWwmfhGFS9pnq63FScgPgHjNXSlPmwgycb+LqDvDR4C8f1HSbPhOb6I29w==
-  dependencies:
-    tslib "^2.0.0"
-
-"@ngrx/store@^13.1.0":
-  version "13.1.0"
-  resolved "https://nexus.***REMOVED***/repository/npm/@ngrx/store/-/store-13.1.0.tgz#40665a09f673d64e9b6df3aed224ce51219151d3"
-  integrity sha512-2Phsd/CC5FcoS2VgC+Fo5VgfAUK3m7bjWTc8d6+h3UcoQpS3xyPnybGYifa/JYN1CFYmqypVDRWSMAgML2NU/A==
-  dependencies:
-    tslib "^2.0.0"
-
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://nexus.***REMOVED***/repository/npm/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz#7619c2eb21b25483f6d167548b4cfd5a7488c3d5"
@@ -5075,7 +5042,7 @@ tsconfig-paths@^3.10.1, tsconfig-paths@^3.9.0:
     minimist "^1.2.6"
     strip-bom "^3.0.0"
 
-tslib@2.3.1, tslib@^2.0.0, tslib@^2.1.0:
+tslib@2.3.1, tslib@^2.1.0:
   version "2.3.1"
   resolved "https://nexus.***REMOVED***/repository/npm/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
   integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==
