@@ -1,8 +1,15 @@
 require("dotenv").config({ path: '/app/.env' });
 
-import { MysqlConnectionOptions } from "typeorm/driver/mysql/MysqlConnectionOptions";
+import { ConnectionOptions } from "typeorm-seeding" 
 
-const config: MysqlConnectionOptions = {
+import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOptions';
+
+interface newConnectionOptions extends MysqlConnectionOptions {
+  readonly seeds?: (Function | string)[];
+  readonly factories?: (Function | string)[];
+}
+
+const config: newConnectionOptions = {
   type: 'mysql',
   host:  process.env.MYDQL_HOST,
   port:  parseInt(process.env.MYSQL_PORT, 10) || 3306,
@@ -14,12 +21,15 @@ const config: MysqlConnectionOptions = {
   synchronize: false,
   logging: true,
 
+  seeds: ["src/seeding/seeds/**/*{.ts,.js}"],
+  factories: ["src/seeding/factories/**/*{.ts,.js}"],
+
   migrations: ['src/migrations/**/*.ts'],
   cli: {
     migrationsDir: 'src/migrations',
   },
   migrationsTableName: "migrations_typeorm",
-  migrationsRun: true,
+  migrationsRun: true
 }
 
 export default config;
