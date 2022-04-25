@@ -43,16 +43,19 @@
         <span *ngIf="isExpanded || isShowing"> Категории </span>
       </a>
 
-      <a mat-list-item routerLink="" routerLinkActive="active" (click)="showSubmenu = !showSubmenu">
-        <mat-icon mat-list-icon> settings </mat-icon>
-        <span *ngIf="isExpanded || isShowing"> Администрирование </span>
-        <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubmenu}" *ngIf="isExpanded || isShowing">expand_more</mat-icon>
-      </a>
+      <span *ngIf="role_user == 'admin'">
 
-      <div class="submenu" [ngClass]="{'expanded' : showSubmenu}" *ngIf="isShowing || isExpanded">
-        <a mat-list-item routerLink=""> Пользователи </a>
-        <a mat-list-item routerLink=""> История </a>
-      </div>
+        <a mat-list-item routerLink="" routerLinkActive="active" (click)="showSubmenu = !showSubmenu">
+          <mat-icon mat-list-icon> settings </mat-icon>
+          <span *ngIf="isExpanded || isShowing"> Администрирование </span>
+          <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubmenu}" *ngIf="isExpanded || isShowing">expand_more</mat-icon>
+        </a>
+
+        <div class="submenu" [ngClass]="{'expanded' : showSubmenu}" *ngIf="isShowing || isExpanded">
+          <a mat-list-item routerLink=""> Пользователи </a>
+          <a mat-list-item routerLink=""> История </a>
+        </div>
+      </span>
 
     </mat-nav-list>
   </mat-sidenav>

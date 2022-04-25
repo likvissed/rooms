@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
 
   isAuthenticated = false;
   fio_initials = '';
+  role_user = '';
 
   constructor(
     private authHelper: AuthHelper
@@ -27,6 +28,7 @@ export class HeaderComponent implements OnInit {
 
       if (isAuth) {
         this.fio_initials = this.authHelper.getJwtPayload()['fio_initials'];
+        this.role_user = this.authHelper.getJwtPayload()['role'];
       }
     });
   }
