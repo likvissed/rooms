@@ -23,6 +23,8 @@
     "migration": "yarn typeorm migration:run",
     "migration:create": "yarn typeorm migration:create -n",
     "migration:revert": "yarn typeorm migration:revert",
+
+    "seed:config": "ts-node -r tsconfig-paths/register ./node_modules/typeorm-seeding/dist/cli.js config -n src/ormconfig.ts",
     "db:seed": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed --configName src/ormconfig.ts"
   },
   "dependencies": {

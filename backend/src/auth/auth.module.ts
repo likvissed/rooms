@@ -1,3 +1,5 @@
+import { UserModule } from './../user/user.module';
+import { UserService } from './../user/user.service';
 import { AuthController } from './auth.controller';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
@@ -12,7 +14,9 @@ require('dotenv-expand').expand(require("dotenv").config({ path: '/app/.env' }))
     JwtModule.register({
       secret: process.env.JWT_KEY,
       signOptions: {expiresIn: '60s'}
-    })],
+    }),
+    UserModule
+  ],
   providers: [AuthService],
   controllers: [
     AuthController
