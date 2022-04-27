@@ -42,9 +42,10 @@ $rooms-frontend-theme: mat.define-light-theme((
   --header-color: #008080;
   --footer-color: #cddfdf;
   --white-color: #f4f4f4;
+  --primary-color: #538cc2;
   // --dark-color: #333333;
   // --danger-color: #dc3545;
-  // --success-color: mediumseagreen;
+  --success-color: #4BB462;
 }
 
 // html, body { height: 100%; }
@@ -59,7 +60,33 @@ body {
   cursor: pointer
 }
 
+.container {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: 55px;
+}
+
+
+// -------------- Material --------------
+
 .mat-toolbar {
   background: var(--header-color);
   color: #fff
 }
+
+.mat-success {
+  background-color: var(--success-color);
+  color: #fff;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.mat-dialog-actions {
+  justify-content: flex-end;
+}
+
+// --------------  --------------

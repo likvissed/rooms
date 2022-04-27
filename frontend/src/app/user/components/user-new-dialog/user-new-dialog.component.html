@@ -1,0 +1,26 @@
+<div mat-dialog-title> Добавление пользователя </div>
+<div mat-dialog-content>
+  <div class="container">
+    === {{ isSubmitting$ | async }} ===
+
+    <form [formGroup]="form" class="container">
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label> Табельный номер </mat-label>
+        <input formControlName="tn" matInput placeholder="Введите табельный номер пользователя" value="">
+      </mat-form-field>
+
+      <!-- <mat-form-field class="full-width" appearance="fill">
+        <mat-label> Роль </mat-label>
+        <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+      </mat-form-field> -->
+    </form>
+
+  </div>
+
+
+
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="success" (click)="onSave()" [disabled]="isSubmitting$ | async"> Сохранить </button>
+  <button mat-button mat-dialog-close (click)="onClose()"> Отмена </button>
+</div>

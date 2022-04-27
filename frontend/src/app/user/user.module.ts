@@ -1,0 +1,45 @@
+import { UserService } from './services/user.service';
+import { UserNewDialogComponent } from './components/user-new-dialog/user-new-dialog.component';
+import { MaterialModule } from './../material.module';
+
+import { UserComponent } from './components/user/user.component';
+
+import { AuthCenterGuard } from '@iss/ng-auth-center';
+
+import { Routes, RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+
+import { StoreModule } from '@ngrx/store';
+import { reducers } from './store/reducers';
+
+import { EffectsModule } from '@ngrx/effects';
+import { CreateEffect } from './store/effects/create.effect';
+
+const routes: Routes = [
+  {
+    path: 'users',
+    component: UserComponent,
+    canActivate: [AuthCenterGuard]
+  }
+]
+
+@NgModule({
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule.forChild(routes),
+    MaterialModule,
+    StoreModule.forFeature('user', reducers),
+    EffectsModule.forFeature([CreateEffect]),
+  ],
+  declarations: [
+    UserComponent,
+    UserNewDialogComponent
+  ],
+  providers: [
+    UserService
+  ]
+})
+export class UserModule { }
