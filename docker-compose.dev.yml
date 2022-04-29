@@ -116,11 +116,20 @@ services:
       - rooms-js--development
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
 
+  redis:
+    <<: *common
+    image: redis:5.0.11
+    volumes:
+      - redis:/data
+    restart: always
+    networks:
+      - rooms-js--development
 
 volumes:
   backend-node_modules:
   frontend-node_modules:
   mysql-data:
+  redis:
 
 networks:
   rooms-js--development:
