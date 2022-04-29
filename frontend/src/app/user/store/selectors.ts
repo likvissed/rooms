@@ -1,3 +1,4 @@
+import { roles } from './../../../../../backend/src/database/role/data';
 import { UserStateInterface } from './../types/user-state.interface';
 import { AppStateInterface } from './../../shared/types/app-state.interface';
 
@@ -20,4 +21,9 @@ export const isSubmittingSelector = createSelector(
 export const validationErrorsSelector = createSelector(
   userFeatureSelector,
   (userState: UserStateInterface) => userState.validationsErrors
+)
+
+export const listRolesSelector = createSelector(
+  userFeatureSelector,
+  (userState: any) => userState.roles
 )

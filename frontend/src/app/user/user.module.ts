@@ -1,3 +1,4 @@
+import { NewEffect } from './store/effects/new.effect';
 import { UserService } from './services/user.service';
 import { UserNewDialogComponent } from './components/user-new-dialog/user-new-dialog.component';
 import { MaterialModule } from './../material.module';
@@ -32,7 +33,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     MaterialModule,
     StoreModule.forFeature('user', reducers),
-    EffectsModule.forFeature([CreateEffect]),
+    EffectsModule.forFeature([CreateEffect, NewEffect]),
   ],
   declarations: [
     UserComponent,

@@ -1,15 +1,14 @@
-import { createSuccessAction, createFailureAction } from './../actions/create.action';
+import { newUserAction, newSuccessAction, newFailureAction } from './../actions/new.action';
 import { UserService } from './../../services/user.service';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { createUserAction } from '../actions/create.action';
 import { HttpErrorResponse } from '@angular/common/http';
 import { of } from 'rxjs';
 import { Injectable } from "@angular/core";
 
 @Injectable()
-export class CreateEffect {
+export class NewEffect {
   constructor(
     private actions$: Actions,
     private userService: UserService,
@@ -17,19 +16,17 @@ export class CreateEffect {
     // private router: Router
   ) {}
 
-  create$ = createEffect(() =>
+  new$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(createUserAction),
-      switchMap(({new_user}) => { // { new_user }
-        return this.userService.create(new_user).pipe(
+      ofType(newUserAction),
+      switchMap(() => {
+        return this.userService.new().pipe(
           map((result: any) => {
-            console.log('RES', result);
-            return createSuccessAction({result});
+            return newSuccessAction({result});
           }),
 
           catchError((errorResponse: HttpErrorResponse) => {
-            console.log('catchError', errorResponse.error.message)
-            return of(createFailureAction({error: errorResponse.error.message}))
+            return of(newFailureAction({error: errorResponse}))
           })
         )
       })

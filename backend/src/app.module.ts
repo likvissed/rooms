@@ -1,3 +1,4 @@
+import { HrModule } from './hr/hr.module';
 // import { UserService } from './user/user.service';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
@@ -19,7 +20,8 @@ require("dotenv").config({ path: '/app/.env' });
     TypeOrmModule.forRoot(ormconfig[0]),
     HttpModule,
     AuthModule,
-    UserModule
+    UserModule,
+    HrModule
   ],
   controllers: [
     AppController
@@ -29,4 +31,4 @@ require("dotenv").config({ path: '/app/.env' });
   ]
 })
 
-export class AppModule {}
+export class AppModule { }

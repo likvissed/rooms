@@ -1,4 +1,4 @@
 export interface NewResponseInterface {
   tn: number
-  roles: string[]
+  role_id: number
 }

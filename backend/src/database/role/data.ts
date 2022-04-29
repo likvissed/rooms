@@ -1,4 +1,4 @@
-import { Role } from "src/Interfaces/main/role.interface";
+import { Role } from './../../Interfaces/main/role.interface';
 
 export const roles: Role[] = [
   {

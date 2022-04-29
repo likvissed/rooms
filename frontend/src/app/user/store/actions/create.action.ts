@@ -4,7 +4,7 @@ import { CreateRequestInterface } from '../../types/create-request.interface';
 
 export const createUserAction = createAction(
   ActionTypes.CREATE,
-  props<{ create: CreateRequestInterface }>()
+  props<{ new_user: CreateRequestInterface }>()
 );
 
 export const createSuccessAction = createAction(

@@ -13,16 +13,18 @@ export class UserService {
   new() {
     const url = `${environment.apiUrl}/user/new`;
 
-    return this.http.get<NewResponseInterface>(url);
+    return this.http.get(url); // <NewResponseInterface>
   }
 
   create(data: any) { //: NewResponseInterface
-    const params = new HttpParams()
-      .set('user', data);
+    // const params = new HttpParams()
+    //   .set('user', data);
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json');
 
     const url = `${environment.apiUrl}/user/create`;
 
-    return this.http.post(url, params); //post<NewResponseInterface>
+    return this.http.post(url, data , { headers }); // post<NewResponseInterface>
   }
 
 }

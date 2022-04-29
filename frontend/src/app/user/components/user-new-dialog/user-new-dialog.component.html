@@ -1,25 +1,29 @@
 <div mat-dialog-title> Добавление пользователя </div>
+
 <div mat-dialog-content>
   <div class="container">
-    === {{ isSubmitting$ | async }} ===
+
+    === {{ backendErrors$ | async }} ===
 
     <form [formGroup]="form" class="container">
-      <mat-form-field class="full-width" appearance="fill">
+      <mat-form-field class="full-width">
         <mat-label> Табельный номер </mat-label>
         <input formControlName="tn" matInput placeholder="Введите табельный номер пользователя" value="">
       </mat-form-field>
 
-      <!-- <mat-form-field class="full-width" appearance="fill">
+      <mat-form-field class="full-width">
         <mat-label> Роль </mat-label>
-        <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
-      </mat-form-field> -->
+        <mat-select formControlName="role_id">
+          <mat-option *ngFor="let role of roles$ | async" [value]="role.id">
+            {{role.short_description}} ({{ role.long_description }})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </form>
 
   </div>
-
-
-
 </div>
+
 <div mat-dialog-actions>
   <button mat-raised-button color="success" (click)="onSave()" [disabled]="isSubmitting$ | async"> Сохранить </button>
   <button mat-button mat-dialog-close (click)="onClose()"> Отмена </button>
