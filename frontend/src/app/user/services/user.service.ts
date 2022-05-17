@@ -11,7 +11,7 @@ export class UserService {
   ) {}
 
   new() {
-    const url = `${environment.apiUrl}/user/new`;
+    const url = `${environment.apiUrl}/users/new`;
 
     return this.http.get(url); // <NewResponseInterface>
   }
@@ -22,7 +22,7 @@ export class UserService {
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json');
 
-    const url = `${environment.apiUrl}/user/create`;
+    const url = `${environment.apiUrl}/users/create`;
 
     return this.http.post(url, data , { headers }); // post<NewResponseInterface>
   }

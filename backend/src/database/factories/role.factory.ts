@@ -1,9 +1,9 @@
-import { Role } from '../../entities/main/role.entity';
+import { RoleEntity } from '../../entities/main/role.entity';
 import { Faker } from '@faker-js/faker';
 import { define } from "typeorm-seeding";
 
-define(Role, (faker: typeof Faker) => {
-  const role = new Role();
+define(RoleEntity, (faker: typeof Faker) => {
+  const role = new RoleEntity();
 
   role.name = 'admin';
   role.short_description = 'Администратор';

@@ -1,9 +1,9 @@
 import { CreateUserDto } from './dto/create-user.dto';
-import { User } from './../entities/main/user.entity';
+import { UserEntity } from './../entities/main/user.entity';
 import { UserService } from './user.service';
 import { Body, Controller, Get, Header, HttpCode, HttpException, HttpStatus, Logger, Post, Response, UsePipes, ValidationPipe } from '@nestjs/common';
 
-@Controller('user')
+@Controller('users')
 export class UserController {
 
   constructor(

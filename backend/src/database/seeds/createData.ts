@@ -1,5 +1,5 @@
-import { User } from './../../entities/main/user.entity';
-import { Role } from './../../entities/main/role.entity';
+import { UserEntity } from './../../entities/main/user.entity';
+import { RoleEntity } from './../../entities/main/role.entity';
 
 import { Factory, Seeder } from "typeorm-seeding";
 import { Connection } from "typeorm";
@@ -7,13 +7,13 @@ import { Connection } from "typeorm";
 export default class InitialDatabaseSeed implements Seeder {
   public async run(factory: Factory, connection: Connection): Promise<void> {
     // Создание роли "Администратор"
-    const roleAdmin = await factory(Role)().create();
+    const roleAdmin = await factory(RoleEntity)().create();
 
     // Создание остальных ролей
     await connection
       .createQueryBuilder()
       .insert()
-      .into(Role)
+      .into(RoleEntity)
       .values([
         // { name: 'admin', short_description: 'Администратор', long_description: 'Полные права доступа на все модели' },
         { name: 'security', short_description: 'Защитник информации', long_description: 'Пользователь с доступом к категориям' },
@@ -23,7 +23,7 @@ export default class InitialDatabaseSeed implements Seeder {
       .execute()
 
     // Создание пользователя с ролью "Администратор"
-    await factory(User)()
+    await factory(UserEntity)()
       .map(async (user) => {
         user.role = roleAdmin;
 

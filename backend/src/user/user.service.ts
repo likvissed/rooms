@@ -1,6 +1,6 @@
 import { HrService } from './../hr/hr.service';
-import { Role } from './../entities/main/role.entity';
-import { User } from './../entities/main/user.entity';
+import { RoleEntity } from './../entities/main/role.entity';
+import { UserEntity } from './../entities/main/user.entity';
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { getRepository, Repository } from 'typeorm';
@@ -9,10 +9,10 @@ import { map, switchMap, throwError, catchError, of } from 'rxjs';
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
-    @InjectRepository(Role)
-    private roleRepository: Repository<Role>,
+    @InjectRepository(UserEntity)
+    private userRepository: Repository<UserEntity>,
+    @InjectRepository(RoleEntity)
+    private roleRepository: Repository<RoleEntity>,
 
     private hrService: HrService
   ) {}
@@ -49,7 +49,7 @@ export class UserService {
       throw new HttpException(`Пользователь с табельным номером ${user.tn} не существует`, HttpStatus.NOT_FOUND);
     }
 
-    const new_user = new User();
+    const new_user = new UserEntity();
   
     new_user.tn = current_user.personnelNo;
     new_user.id_tn = current_user.id;
@@ -57,7 +57,7 @@ export class UserService {
     new_user.fullname = current_user.fullName;
     new_user.role = role;
 
-    return await getRepository(User).save(new_user);
+    return await getRepository(UserEntity).save(new_user);
   }
 
 }
