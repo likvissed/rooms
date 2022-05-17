@@ -27,68 +27,37 @@ export class UserService {
     return await this.roleRepository.find();
   }
 
-  insert(user): any{
+  async create(user): Promise<any> {
 
-    // let role = await this.roleRepository.findOne({ id: user.role_id });
+    const peresent_user = await this.userRepository.findOne({
+      tn: user.tn
+    });
 
-    return this.hrService.findByTn(user.tn)
-      .pipe(
-        map(response => {
-          // console.log('response[0]', response[0]);
-          return response[0];
-        }),
-        catchError(error=> {
-          console.log('error', error);
-          return of(`Пользователь с табельным номером ${user.tn} не существует`)
-          // throw new HttpException(`Пользователь с табельным номером ${user.tn} не существует`, HttpStatus.NOT_FOUND)
+    if (peresent_user != undefined) {
+      throw new HttpException('Пользователь уже существует', HttpStatus.FOUND);
+    }
 
-        }),
-        map(hr_user => {
-          // console.log('hr_user', hr_user);
-          if (hr_user && user.role_id) {
-            this.saveUser(user.role_id, hr_user);
+    let role = await this.roleRepository.findOne({ id: user.role_id });
 
-            return true;
-          } else {
-            return false;
-          }
-        })
-      )
-  }
+    if (!role) {
+      throw new HttpException('Выбранная роль не существует', HttpStatus.BAD_REQUEST,
+      );
+    }
 
-  async saveUser(role_id, hr_user) {
-    let role = await this.roleRepository.findOne({ id: role_id });
+    const current_user = await this.hrService.findByTn(user.tn)
+    if (!current_user) {
+      throw new HttpException(`Пользователь с табельным номером ${user.tn} не существует`, HttpStatus.NOT_FOUND);
+    }
 
     const new_user = new User();
   
-    new_user.tn = hr_user.personnelNo;
-    new_user.id_tn = hr_user.id;
-    new_user.phone = hr_user.phoneText;
-    new_user.fullname = hr_user.fullName;
+    new_user.tn = current_user.personnelNo;
+    new_user.id_tn = current_user.id;
+    new_user.phone = current_user.phoneText;
+    new_user.fullname = current_user.fullName;
     new_user.role = role;
 
-    // return getRepository(User).save(new_user);
-    return true
-
-  }
-
-  async saves(role_id, tn) {
-    let issuccess = false;
-
-    await this.hrService.findByTn(tn)
-      .subscribe(response => {   
-        if (response[0]) {
-          return issuccess = false;
-        } else {
-          return issuccess = true;
-        }
-      },
-        (er) => {
-
-          return issuccess = false;
-        });
-          return issuccess ;
-
+    return await getRepository(User).save(new_user);
   }
 
 }

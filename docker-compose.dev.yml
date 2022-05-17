@@ -118,7 +118,7 @@ services:
 
   redis:
     <<: *common
-    image: redis:5.0.11
+    image: docker-hub-proxy.***REMOVED***/redis:5.0.11
     volumes:
       - redis:/data
     restart: always

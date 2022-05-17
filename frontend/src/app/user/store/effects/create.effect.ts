@@ -29,6 +29,7 @@ export class CreateEffect {
 
           catchError((errorResponse: HttpErrorResponse) => {
             console.log('catchError', errorResponse.error.message)
+            alert(errorResponse.error.message);
             return of(createFailureAction({error: errorResponse.error.message}))
           })
         )

@@ -1,3 +1,4 @@
+import { RedisCacheService } from '../shared/redis-cache-service';
 import { switchMap, catchError } from 'rxjs/operators';
 import { Injectable, Logger } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
@@ -6,65 +7,52 @@ import { map, Observable, of, repeat } from 'rxjs';
 @Injectable()
 export class HrService {
   constructor(
-    private httpService: HttpService
+    private httpService: HttpService,
+    private redis: RedisCacheService
   ) {}
 
-  findByTn(tn: number): any {
-    return this.findEmpTn(tn)
-      .pipe(
-        map(response => {
-          return response.data
-        }),
-        catchError(error=> {
-          console.log('error', error.response.status);
-          if (error.response.status == 401) {
-            return of('401')
-          }
-        }),
-        map(data => {
-          if (data == '401') {
-            this.getNewToken();
+  async findByTn(tn: number): Promise<any> {
+    let user = await this.findEmpTn(tn);
 
-            return this.findEmpTn(tn)
-                    .pipe(
-                      switchMap((response:any) => of(response.data))
-                  )
-          }
-
-          return data
-        })
-      )
-      // .toPromise()
-      // .subscribe((response) => {
-      //   console.log('HRRR:', response[0])
-
-      //   return response[0]
-      // })
+    return user.data.data[0];
   }
 
-  getNewToken() {
+  async getValidToken() {
+    let token = await this.redis.get('token_hr');
+
+    if (token == null) { 
+      let new_token = await this.getNewToken();
+
+      // TODO: Изменить срок действия (1000)
+      await this.redis.set('token_hr', new_token.data.token, 1000);
+    }
+
+    return await this.redis.get('token_hr');
+  }
+
+  async getNewToken() {
     const headersRequest = {
       'X-Auth-Username': process.env.NAME_USER_HR,
       'X-Auth-Password': process.env.PASSWORD_USER_HR
     };
 
-    return this.httpService.post(process.env.USERS_REFERENCE_URI_LOGIN, {}, { headers: headersRequest })
-      .pipe(
-        map(response => {
-          console.log('token', response.data.token);
-          return response.data.token
-        } )
-      )
+    const response = this.httpService.post(process.env.USERS_REFERENCE_URI_LOGIN, {}, { headers: headersRequest })
+      .toPromise();
+
+    return response;
   }
 
-  findEmpTn(tn: number) {
+  async findEmpTn(tn: number) {
+    let token = await this.getValidToken();
+
     const headersRequest = {
-      'X-Auth-Token': '62df0772-b5fe-4ab2-934c-81884cedcd97'
+      'X-Auth-Token': `${token}`
     };
 
-    return this.httpService.get(`${process.env.USERS_REFERENCE_URI}/emp?search=personnelNo==${tn}`, { headers: headersRequest })
-      .pipe(
-        map(response => response.data )
-      )
+    const response = this.httpService.get(`${process.env.USERS_REFERENCE_URI}/emp?search=personnelNo==${tn}`, { headers: headersRequest })
+      .toPromise();
+
+    return response;
   }
+
 }
