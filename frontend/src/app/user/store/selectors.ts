@@ -27,3 +27,8 @@ export const listRolesSelector = createSelector(
   userFeatureSelector,
   (userState: any) => userState.roles
 )
+
+export const allUsersSelector = createSelector(
+  userFeatureSelector,
+  (userState: any) => userState.users
+)

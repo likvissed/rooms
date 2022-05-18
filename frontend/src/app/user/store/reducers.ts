@@ -1,3 +1,4 @@
+import { getUsersAction, getUsersSuccessAction, getUsersailureAction } from './actions/get-users.action';
 import { newUserAction, newSuccessAction, newFailureAction } from './actions/new.action';
 import { UserStateInterface } from './../types/user-state.interface';
 import { Action, createReducer, on } from "@ngrx/store"
@@ -7,7 +8,8 @@ const  initialState:  any = {
   isSubmitting: false,
   validationsErrors: null,
   roles: null, //as any
-  response: null
+  response: null,
+  users: null
 }
 
 const userReducer = createReducer(
@@ -41,6 +43,18 @@ const userReducer = createReducer(
     ...state,
     validationsErrors: action.error,
     roles: null
+  })),
+
+  on(getUsersAction, (state): any => ({
+    ...state
+  })),
+  on(getUsersSuccessAction, (state, action): any => ({
+    ...state,
+    users: action.result
+  })),
+  on(getUsersailureAction, (state, action): any => ({
+    ...state,
+    validationsErrors: action.error,
   }))
 )
 

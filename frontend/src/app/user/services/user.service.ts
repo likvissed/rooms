@@ -10,6 +10,12 @@ export class UserService {
     private http: HttpClient
   ) {}
 
+  getUsers() {
+    const url = `${environment.apiUrl}/users`;
+
+    return this.http.get(url);
+  }
+
   new() {
     const url = `${environment.apiUrl}/users/new`;
 

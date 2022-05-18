@@ -60,4 +60,8 @@ export class UserService {
     return await getRepository(UserEntity).save(new_user);
   }
 
+  async findAll(): Promise<any> {
+    return this.userRepository.find({ relations: ['role'] });
+  }
+
 }

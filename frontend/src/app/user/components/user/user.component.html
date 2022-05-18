@@ -1,1 +1,69 @@
-<button mat-raised-button color="primary" (click)="onCreateUser()"> Добавить пользователя </button>
+<div class="container">
+  <span class="row">
+    <mat-form-field appearance="standard" class="mat-column-30">
+      <mat-label> Поиск по ФИО и табельному </mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Введите значение" #input>
+    </mat-form-field>
+  </span>
+
+  <span>
+    <button mat-raised-button color="primary" (click)="onCreateUser()"> Добавить пользователя </button>
+  </span>
+
+  <div *ngIf="dataSource">
+
+
+    <span class="col-center">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 mat-column-60">
+
+        <ng-container matColumnDef="number">
+          <th mat-header-cell *matHeaderCellDef> № </th>
+          <td mat-cell *matCellDef="let element; let i = index;"> {{ i + 1 }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="tn">
+          <th mat-header-cell *matHeaderCellDef> Табельный </th>
+          <td mat-cell *matCellDef="let element"> {{element.tn}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fio">
+          <th mat-header-cell *matHeaderCellDef> ФИО </th>
+          <td mat-cell *matCellDef="let element"> {{element.fullname}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="role">
+          <th mat-header-cell *matHeaderCellDef> Роль </th>
+          <td mat-cell *matCellDef="let element"> {{ element.role.short_description }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="edit">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element" class="pointer" matTooltip="Редактировать" matTooltipPosition="above">
+            <mat-icon mat-list-icon> edit </mat-icon>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="delete">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element" class="pointer" matTooltip="Удалить" matTooltipPosition="above" class="red-icon">
+            <mat-icon> delete </mat-icon>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4"> Не найдено "{{input.value}}"</td>
+        </tr>
+      </table>
+    </span>
+
+    <mat-paginator
+      [pageSizeOptions]="[15, 10, 20]"
+      showFirstLastButtons
+    >
+    </mat-paginator>
+  </div>
+
+</div>

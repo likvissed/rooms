@@ -5,5 +5,9 @@ export enum ActionTypes {
 
   CREATE = '[User] Create',
   CREATE_SUCCESS = '[User] Create success',
-  CREATE_FAILURE = '[User] Create failure'
+  CREATE_FAILURE = '[User] Create failure',
+
+  GET_USERS = '[User] Get',
+  GET_USERS_SUCCESS = '[User] Get success',
+  GET_USERS_FAILURE = '[User] Get failure'
 }

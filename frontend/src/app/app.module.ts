@@ -1,3 +1,5 @@
+import { CustomPaginatorClass } from './shared/paginatior/custom-paginator-class';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 import { MaterialModule } from './material.module';
 import { FormsModule } from '@angular/forms';
 import { UserModule } from './user/user.module';
@@ -48,7 +50,9 @@ import { EffectsModule } from '@ngrx/effects';
       logOnly: environment.production // Restrict extension to log-only mode
     }),
   ],
-  providers: [],
+  providers: [
+    { provide: MatPaginatorIntl, useClass: CustomPaginatorClass }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

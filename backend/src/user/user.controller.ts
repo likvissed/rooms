@@ -10,6 +10,18 @@ export class UserController {
     private readonly userService: UserService
   ) {}
 
+  @Get()
+  async getUsers(@Response() res) {
+    res.send(await this.userService.findAll());
+
+    // await this.userService.findAll()
+    // .then((users) => {
+    //   console.log('users', users);
+
+    //   res.send(users);
+    // })
+  }
+
   @Get('new')
   async new(@Body() body, @Response() res) {
 
