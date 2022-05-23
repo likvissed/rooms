@@ -1,3 +1,4 @@
+import { ConfirmDialogComponent } from './../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { allUsersSelector } from './../../store/selectors';
 import { getUsersAction } from './../../store/actions/get-users.action';
 import { Store, select } from '@ngrx/store';
@@ -11,6 +12,7 @@ import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 // import { MatDialogRef } from '@angular/material';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
+import { deleteUserAction } from '../../store/actions/delete.action';
 
 @Component({
   selector: 'app-user',
@@ -48,12 +50,16 @@ export class UserComponent implements OnInit, AfterViewInit {
 
   initializeValues() {
     this.store.dispatch(getUsersAction());
+    this.loadUsers();
+  }
 
+  loadUsers() {
     this.store.pipe(select(allUsersSelector))
       .subscribe((value: any) => {
+        console.log('val', value);
+
         this.dataSource = new MatTableDataSource(value);
         this.dataSource.paginator = this.paginator;
-
       });
   }
 
@@ -61,6 +67,23 @@ export class UserComponent implements OnInit, AfterViewInit {
     this.dialog.open(UserNewDialogComponent, {
       width: '700px',
       disableClose: true
+    });
+  }
+
+  onDestroyUser(id: number, fio: string) {
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '700px',
+      data: {
+        title: 'Вы действительно хотите удалить пользователя:',
+        message:  `"${fio}"?`
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == 'success') {
+        this.store.dispatch(deleteUserAction({id: id}));
+      }
     });
   }
 

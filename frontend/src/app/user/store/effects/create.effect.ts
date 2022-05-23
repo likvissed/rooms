@@ -1,6 +1,7 @@
+import { getUsersAction } from './../actions/get-users.action';
 import { createSuccessAction, createFailureAction } from './../actions/create.action';
 import { UserService } from './../../services/user.service';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap, takeUntil } from 'rxjs/operators';
 
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { createUserAction } from '../actions/create.action';
@@ -23,9 +24,12 @@ export class CreateEffect {
       switchMap(({new_user}) => { // { new_user }
         return this.userService.create(new_user).pipe(
           map((result: any) => {
-            console.log('RES', result);
-            return createSuccessAction({result});
+            console.log('create user Success:', result);
           }),
+          switchMap((result: any) => [
+            createSuccessAction({result}),
+            getUsersAction()
+          ]),
 
           catchError((errorResponse: HttpErrorResponse) => {
             console.log('catchError', errorResponse.error.message)

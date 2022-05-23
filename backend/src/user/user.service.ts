@@ -64,4 +64,17 @@ export class UserService {
     return this.userRepository.find({ relations: ['role'] });
   }
 
+  async deleteUser(id: number): Promise<any> {
+    const user = await this.userRepository.findOne({
+      id: id
+    });
+
+    if (!user) {
+      throw new HttpException('Пользователь уже удален', HttpStatus.FOUND);
+    }
+
+    await this.userRepository.delete({ id });
+    return { message: 'Пользователь удален' };
+  }
+
 }

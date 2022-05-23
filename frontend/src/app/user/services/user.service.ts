@@ -33,4 +33,8 @@ export class UserService {
     return this.http.post(url, data , { headers }); // post<NewResponseInterface>
   }
 
+  delete(id: number) {
+    return this.http.delete(`${environment.apiUrl}/users/${id}`)
+  }
+
 }

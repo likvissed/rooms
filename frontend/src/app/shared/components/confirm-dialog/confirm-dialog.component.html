@@ -1,0 +1,15 @@
+<div mat-dialog-title> Подтвердите действие </div>
+
+<div mat-dialog-content>
+  <div class="container text-center">
+    <span class="confirm-title" *ngIf="data.title"> {{ data.title }} </span>
+    <br>
+    <b class="confirm-message"> {{ data.message }} </b>
+
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="onClickYes()" color="success"> Да </button>
+  <button mat-button mat-dialog-close color="danger"> Нет </button>
+</div>

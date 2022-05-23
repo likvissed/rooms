@@ -1,3 +1,4 @@
+import { ConfirmDialogComponent } from './shared/components/confirm-dialog/confirm-dialog.component';
 import { CustomPaginatorClass } from './shared/paginatior/custom-paginator-class';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { MaterialModule } from './material.module';
@@ -29,7 +30,8 @@ import { EffectsModule } from '@ngrx/effects';
     HeaderComponent,
     FooterComponent,
     NotFoundComponent,
-    AuthComponent
+    AuthComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,

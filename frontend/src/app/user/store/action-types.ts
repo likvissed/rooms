@@ -9,5 +9,9 @@ export enum ActionTypes {
 
   GET_USERS = '[User] Get',
   GET_USERS_SUCCESS = '[User] Get success',
-  GET_USERS_FAILURE = '[User] Get failure'
+  GET_USERS_FAILURE = '[User] Get failure',
+
+  DELETE_USER = '[User] Delete',
+  DELETE_USER_SUCCESS = '[User] Delete success',
+  DELETE_USER_FAILURE = '[User] Delete failure'
 }

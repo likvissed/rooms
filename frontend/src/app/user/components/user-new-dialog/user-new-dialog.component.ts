@@ -73,6 +73,7 @@ export class UserNewDialogComponent implements OnInit {
     // console.log('ERR', err);
     // this.backendErrors$ = this.store.pipe(select(validationErrorsSelector));
     // alert(this.backendErrors$);
+    this.dialogRef.close('success');
   }
 
 }

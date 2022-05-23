@@ -1,8 +1,9 @@
-import { getUsersAction, getUsersSuccessAction, getUsersailureAction } from './actions/get-users.action';
+import { getUsersAction, getUsersSuccessAction, getUsersFailureAction } from './actions/get-users.action';
 import { newUserAction, newSuccessAction, newFailureAction } from './actions/new.action';
 import { UserStateInterface } from './../types/user-state.interface';
 import { Action, createReducer, on } from "@ngrx/store"
 import { createFailureAction, createSuccessAction, createUserAction } from "./actions/create.action";
+import { deleteUserAction, deleteUserFailureAction, deleteUserSuccessAction } from './actions/delete.action';
 
 const  initialState:  any = {
   isSubmitting: false,
@@ -14,6 +15,7 @@ const  initialState:  any = {
 
 const userReducer = createReducer(
   initialState,
+
   on(createUserAction, (state): UserStateInterface => ({
     ...state,
     isSubmitting: true,
@@ -52,7 +54,19 @@ const userReducer = createReducer(
     ...state,
     users: action.result
   })),
-  on(getUsersailureAction, (state, action): any => ({
+  on(getUsersFailureAction, (state, action): any => ({
+    ...state,
+    validationsErrors: action.error,
+  })),
+
+  on(deleteUserAction, (state): any => ({
+    ...state
+  })),
+  on(deleteUserSuccessAction, (state, action): any => ({
+    ...state,
+    response: action.result
+  })),
+  on(deleteUserFailureAction, (state, action): any => ({
     ...state,
     validationsErrors: action.error,
   }))

@@ -1,4 +1,4 @@
-import { getUsersAction, getUsersSuccessAction, getUsersailureAction } from './../actions/get-users.action';
+import { getUsersAction, getUsersSuccessAction, getUsersFailureAction } from './../actions/get-users.action';
 
 import { UserService } from './../../services/user.service';
 import { catchError, map, switchMap } from 'rxjs/operators';
@@ -27,7 +27,7 @@ export class GetUsersEffect {
 
           catchError((errorResponse: HttpErrorResponse) => {
             console.log('get users catchError:', errorResponse.error.message);
-            return of(getUsersailureAction({error: errorResponse}))
+            return of(getUsersFailureAction({error: errorResponse}))
           })
         )
       })
