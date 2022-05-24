@@ -1,3 +1,5 @@
+import { editUserAction, editUserFailureAction, editUserSuccessAction } from './actions/edit.action';
+import { updateUserAction, updateUserFailureAction, updateUserSuccessAction } from './actions/update.action';
 import { getUsersAction, getUsersSuccessAction, getUsersFailureAction } from './actions/get-users.action';
 import { newUserAction, newSuccessAction, newFailureAction } from './actions/new.action';
 import { UserStateInterface } from './../types/user-state.interface';
@@ -69,6 +71,32 @@ const userReducer = createReducer(
   on(deleteUserFailureAction, (state, action): any => ({
     ...state,
     validationsErrors: action.error,
+  })),
+
+  on(editUserAction, (state): any => ({
+    ...state
+  })),
+  on(editUserSuccessAction, (state, action): any => ({
+    ...state,
+    // response: action.result,
+    user: action.result.user,
+    roles: action.result.roles
+  })),
+  on(editUserFailureAction, (state, action): any => ({
+    ...state,
+    validationsErrors: action.error
+  })),
+
+  on(updateUserAction, (state): any => ({
+    ...state
+  })),
+  on(updateUserSuccessAction, (state, action): any => ({
+    ...state,
+    // response: action.result
+  })),
+  on(updateUserFailureAction, (state, action): any => ({
+    ...state,
+    validationsErrors: action.error
   }))
 )
 

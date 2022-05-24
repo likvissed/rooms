@@ -24,6 +24,9 @@ export class UserEntity {
   ])
   role: RoleEntity;
 
+  @Column({ name: 'role_id', type: 'int' })
+  role_id: number;
+
   @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
   created_at: Date;
 

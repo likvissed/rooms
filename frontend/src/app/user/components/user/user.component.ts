@@ -70,10 +70,19 @@ export class UserComponent implements OnInit, AfterViewInit {
     });
   }
 
+  onOpenUpdateDialog(id: number) {
+    this.dialog.open(UserNewDialogComponent, {
+      width: '700px',
+      disableClose: true,
+      data: id
+    });
+  }
+
   onDestroyUser(id: number, fio: string) {
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '700px',
+      disableClose: true,
       data: {
         title: 'Вы действительно хотите удалить пользователя:',
         message:  `"${fio}"?`

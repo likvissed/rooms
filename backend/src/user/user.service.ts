@@ -77,4 +77,33 @@ export class UserService {
     return { message: 'Пользователь удален' };
   }
 
+  async editUser(id: number): Promise<any> {
+    let data = {};
+
+    data['user'] = await this.userRepository.findOne({
+      id: id
+    });
+
+    data['roles'] = await this.findAllRoles();
+   
+    console.log('data', data);
+    return data;
+  }
+
+  async updateUser(id, user): Promise<any> {
+    const present_user = await this.userRepository.findOne({
+      id: id
+    });
+
+    if (!present_user) {
+      throw new HttpException(`Пользователь с табельным номером ${user.tn} не существует`, HttpStatus.NOT_FOUND);
+    }
+
+    present_user.tn = user.tn;
+    present_user.role_id = user.role_id;
+
+    return await this.userRepository.save(present_user);
+  }
+
+
 }

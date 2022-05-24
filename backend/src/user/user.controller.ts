@@ -1,7 +1,7 @@
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserEntity } from './../entities/main/user.entity';
 import { UserService } from './user.service';
-import { Body, Controller, Get, Header, HttpCode, HttpException, HttpStatus, Logger, Post, Delete, Response, UsePipes, ValidationPipe, Param } from '@nestjs/common';
+import { Body, Controller, Get, Header, HttpCode, HttpException, HttpStatus, Logger, Post, Delete, Put, Response, UsePipes, ValidationPipe, Param } from '@nestjs/common';
 
 @Controller('users')
 export class UserController {
@@ -40,7 +40,7 @@ export class UserController {
     response.send(new_user);
   }
 
-  @Delete(':id')
+  @Delete(':id/delete')
   async delete(
     @Param('id') id: number,
     @Response() response
@@ -48,6 +48,26 @@ export class UserController {
     const delete_user = await this.userService.deleteUser(id);
 
     response.send(delete_user);
+  }
+
+  @Get(':id/edit')
+  async edit(
+    @Body() body,
+    @Param('id') id: number,
+    @Response() response
+  ) {
+    const user = await this.userService.editUser(id);
+
+    response.send(user);
+  }
+
+  @Put(':id/update')
+  async update(
+    @Param('id') id: number,
+    @Body() user,
+    @Response() response
+  ) {
+    response.send(await this.userService.updateUser(id, user));
   }
 
 }

@@ -1,6 +1,7 @@
+import { CreateRequestInterface } from '../../types/create-request.interface';
+
 import { createAction, props } from '@ngrx/store';
 import { ActionTypes } from '../action-types';
-import { CreateRequestInterface } from '../../types/create-request.interface';
 
 export const createUserAction = createAction(
   ActionTypes.CREATE,

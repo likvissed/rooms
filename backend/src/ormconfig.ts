@@ -1,7 +1,9 @@
+import { RoleEntity } from './entities/main/role.entity';
 require("dotenv").config({ path: '/app/.env' });
 
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { join } from 'path';
+import { UserEntity } from './entities/main/user.entity';
 
 
 export = [
@@ -14,12 +16,14 @@ export = [
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE,
 
-    entities: [__dirname + '/**/*.entity.{js,ts}'],   
+    entities: [RoleEntity, UserEntity],
+    // entities: ['src/entities/main/*.entity.{ts,js}'],
 
     synchronize: false,
     logging: true,
 
     migrations: [join(__dirname, '..', 'migrations/*.{ts,js}')],
+    // migrations: ['src/migrations/**/*.ts'],
     cli: {
       migrationsDir: 'src/migrations',
     },

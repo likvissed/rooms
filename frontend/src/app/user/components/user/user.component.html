@@ -39,7 +39,7 @@
 
           <ng-container matColumnDef="edit">
             <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let element" class="pointer col-lg-03" matTooltip="Редактировать" matTooltipPosition="above">
+            <td mat-cell *matCellDef="let element" class="pointer col-lg-03" matTooltip="Редактировать" matTooltipPosition="above" (click)="onOpenUpdateDialog(element.id)">
               <mat-icon mat-list-icon> edit </mat-icon>
             </td>
           </ng-container>

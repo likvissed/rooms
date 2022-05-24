@@ -32,3 +32,8 @@ export const allUsersSelector = createSelector(
   userFeatureSelector,
   (userState: any) => userState.users
 )
+
+export const userObjectSelector = createSelector(
+  userFeatureSelector,
+  (userState: any) => userState.user
+)

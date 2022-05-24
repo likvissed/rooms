@@ -1,3 +1,5 @@
+import { UserInterface } from './../types/user.interface';
+import { EditResponseInterface } from './../types/edit-response.interface';
 import { environment } from './../../../environments/environment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -34,7 +36,21 @@ export class UserService {
   }
 
   delete(id: number) {
-    return this.http.delete(`${environment.apiUrl}/users/${id}`)
+    return this.http.delete(`${environment.apiUrl}/users/${id}/delete`)
+  }
+
+  edit(id: number) {
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json');
+
+    return this.http.get<EditResponseInterface>(`${environment.apiUrl}/users/${id}/edit`, { headers })
+  }
+
+  update(id: number, user: any) {
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+
+    return this.http.put(`${environment.apiUrl}/users/${id}/update`, user , { headers })
   }
 
 }

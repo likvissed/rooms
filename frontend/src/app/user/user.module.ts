@@ -1,3 +1,5 @@
+import { UpdateEffect } from './store/effects/update.effect';
+import { EditEffect } from './store/effects/edit.effect';
 import { DeleteUserEffect } from './store/effects/delete.effect';
 import { GetUsersEffect } from './store/effects/get-users.effect';
 import { NewEffect } from './store/effects/new.effect';
@@ -40,7 +42,9 @@ const routes: Routes = [
         CreateEffect,
         NewEffect,
         GetUsersEffect,
-        DeleteUserEffect
+        DeleteUserEffect,
+        EditEffect,
+        UpdateEffect
       ]
     ),
   ],
