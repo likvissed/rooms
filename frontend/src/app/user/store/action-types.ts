@@ -21,5 +21,9 @@ export enum ActionTypes {
 
   UPDATE_USER = '[User] Update',
   UPDATE_USER_SUCCESS = '[User] Update success',
-  UPDATE_USER_FAILURE = '[User] Update failure'
+  UPDATE_USER_FAILURE = '[User] Update failure',
+
+  OPEN_EDIT_DIALOG = '[User] Open edit dialog',
+  CLOSE_EDIT_DIALOG = '[User] Close edit dialog',
+  DEFAULT_EDIT_DIALOG = '[User] Default edit dialog'
 }

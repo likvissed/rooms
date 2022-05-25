@@ -1,3 +1,4 @@
+import { openEditDialogUserAction } from './../../store/actions/open-edit-dialog.action';
 import { ConfirmDialogComponent } from './../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { allUsersSelector } from './../../store/selectors';
 import { getUsersAction } from './../../store/actions/get-users.action';
@@ -63,19 +64,12 @@ export class UserComponent implements OnInit, AfterViewInit {
       });
   }
 
-  onCreateUser() {
-    this.dialog.open(UserNewDialogComponent, {
-      width: '700px',
-      disableClose: true
-    });
+  onOpenDialog(id?: number) {
+    this.store.dispatch(openEditDialogUserAction({id: id}));
   }
 
   onOpenUpdateDialog(id: number) {
-    this.dialog.open(UserNewDialogComponent, {
-      width: '700px',
-      disableClose: true,
-      data: id
-    });
+    this.store.dispatch(openEditDialogUserAction({id: id}));
   }
 
   onDestroyUser(id: number, fio: string) {

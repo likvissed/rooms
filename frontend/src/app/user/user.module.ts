@@ -1,3 +1,4 @@
+import { OpenEditDialogEffect } from './store/effects/open-edit-dialog.effect';
 import { UpdateEffect } from './store/effects/update.effect';
 import { EditEffect } from './store/effects/edit.effect';
 import { DeleteUserEffect } from './store/effects/delete.effect';
@@ -44,7 +45,8 @@ const routes: Routes = [
         GetUsersEffect,
         DeleteUserEffect,
         EditEffect,
-        UpdateEffect
+        UpdateEffect,
+        OpenEditDialogEffect
       ]
     ),
   ],

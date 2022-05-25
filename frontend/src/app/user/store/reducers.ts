@@ -7,7 +7,7 @@ import { Action, createReducer, on } from "@ngrx/store"
 import { createFailureAction, createSuccessAction, createUserAction } from "./actions/create.action";
 import { deleteUserAction, deleteUserFailureAction, deleteUserSuccessAction } from './actions/delete.action';
 
-const  initialState:  any = {
+const initialState: any = {
   isSubmitting: false,
   validationsErrors: null,
   roles: null, //as any

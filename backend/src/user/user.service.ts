@@ -53,7 +53,7 @@ export class UserService {
   
     new_user.tn = current_user.personnelNo;
     new_user.id_tn = current_user.id;
-    new_user.phone = current_user.phoneText;
+    new_user.phone = current_user.phoneText ? current_user.phoneText : '';
     new_user.fullname = current_user.fullName;
     new_user.role = role;
 

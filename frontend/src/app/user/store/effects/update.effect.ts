@@ -9,12 +9,14 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { HttpErrorResponse } from '@angular/common/http';
 import { of } from 'rxjs';
 import { Injectable } from "@angular/core";
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable()
 export class UpdateEffect {
   constructor(
     private actions$: Actions,
-    private userService: UserService
+    private userService: UserService,
+    private dialog: MatDialog
   ) {}
 
   update$ = createEffect(() =>
@@ -24,6 +26,8 @@ export class UpdateEffect {
         return this.userService.update(id, user).pipe(
           map((result: any) => {
             console.log('update user Success:', result);
+
+            this.dialog.closeAll();
           }),
           switchMap((result: any) => [
             updateUserSuccessAction({result}),

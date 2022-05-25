@@ -95,13 +95,6 @@ export class UserNewDialogComponent implements OnInit {
 
       this.store.dispatch(createUserAction(request));
     }
-
-
-    // let err = this.store.pipe(select(validationErrorsSelector))
-    // console.log('ERR', err);
-    // this.backendErrors$ = this.store.pipe(select(validationErrorsSelector));
-    // alert(this.backendErrors$);
-    this.dialogRef.close('success');
   }
 
 }
