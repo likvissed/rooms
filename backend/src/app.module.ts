@@ -16,7 +16,10 @@ import ormconfig = require('./ormconfig');
 
 import * as redisStore from 'cache-manager-redis-store';
 
+import { I18nModule } from 'nestjs-i18n';
+
 require("dotenv").config({ path: '/app/.env' });
+import * as path from 'path';
 
 @Module({
   imports: [
@@ -30,6 +33,13 @@ require("dotenv").config({ path: '/app/.env' });
       store: redisStore,
       url: process.env.REDIS_URL,
       isGlobal: true
+    }),
+    I18nModule.forRoot({
+      fallbackLanguage: 'ru',
+      loaderOptions: {
+        path: path.join(__dirname, '/i18n/'),
+        watch: true
+      }
     })
   ],
   controllers: [

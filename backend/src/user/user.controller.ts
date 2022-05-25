@@ -2,7 +2,8 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserEntity } from './../entities/main/user.entity';
 import { UserService } from './user.service';
-import { Body, Controller, Get, Header, HttpCode, HttpException, HttpStatus, Logger, Post, Delete, Put, Response, UsePipes, ValidationPipe, Param } from '@nestjs/common';
+import { Body, Controller, Get, Header, HttpCode, HttpException, HttpStatus, Logger, Post, Delete, Put, Response, UsePipes, ValidationPipe, Param, UseFilters } from '@nestjs/common';
+import { I18n, I18nContext, I18nValidationExceptionFilter, i18nValidationErrorFactory } from 'nestjs-i18n';
 
 @Controller('users')
 export class UserController {
@@ -24,7 +25,10 @@ export class UserController {
   }
 
   @Get('new')
-  async new(@Body() body, @Response() res) {
+  async new(
+    @Body() body,
+    @Response() res
+  ) {
 
     // TODO: Добавить сообщение об ошибке пользователю
     await this.userService.findAllRoles()
@@ -34,26 +38,35 @@ export class UserController {
   }
 
   @Post('create')
-  // @UsePipes(new ValidationPipe({transform: true}))
-  async create(@Body() create_user: CreateUserDto, @Response() response) {
+  // @UsePipes(new ValidationPipe({transform: true, exceptionFactory: i18nValidationErrorFactory}))
+  async create(
+    @Body() create_user:CreateUserDto,
+    @Response() response,
+    @I18n() i18n: I18nContext
+  ) {
     const new_user = await this.userService.create(create_user);
 
-    response.send(new_user);
+    // response.send(new_user);
 
-    // return response.status(HttpStatus.OK).json({
-    //   message: 'Post has been submitted successfully!',
-    //   post: new_user,
-    // });
+    return response.status(HttpStatus.OK).json({
+      message: i18n.t('controller.USER.CREATE.created'),
+      user: new_user,
+    });
   }
 
   @Delete(':id/delete')
   async delete(
     @Param('id') id: number,
-    @Response() response
+    @Response() response,
+    @I18n() i18n: I18nContext
   ) {
     const delete_user = await this.userService.deleteUser(id);
+    // response.send(delete_user);
 
-    response.send(delete_user);
+    return response.status(HttpStatus.OK).json({
+      message: i18n.t('controller.USER.DELETE.deleted'),
+      user: delete_user,
+    });
   }
 
   @Get(':id/edit')
@@ -71,9 +84,14 @@ export class UserController {
   async update(
     @Param('id') id: number,
     @Body() user: UpdateUserDto,
-    @Response() response
+    @Response() response,
+    @I18n() i18n: I18nContext
   ) {
-    response.send(await this.userService.updateUser(id, user));
+    await this.userService.updateUser(id, user);
+
+    return response.status(HttpStatus.OK).json({
+      message: i18n.t('controller.USER.UPDATE.updated')
+    });
   }
 
 }

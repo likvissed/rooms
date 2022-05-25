@@ -24,7 +24,7 @@ export class DeleteUserEffect {
         return this.userService.delete(id).pipe(
           map((result: any) => {
             console.log('delete user Success:', result);
-            // alert(result.message)
+            alert(result.message);
           }),
           switchMap((result: any) => [
             deleteUserSuccessAction({result}),

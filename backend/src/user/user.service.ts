@@ -99,7 +99,6 @@ export class UserService {
       throw new HttpException(`Пользователь с табельным номером ${user.tn} не существует`, HttpStatus.NOT_FOUND);
     }
 
-    present_user.tn = user.tn;
     present_user.role_id = user.role_id;
 
     return await this.userRepository.save(present_user);

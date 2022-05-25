@@ -33,6 +33,7 @@ export class CreateEffect {
             console.log('create user Success:', result);
 
             this.dialog.closeAll();
+            alert(result.message);
           }),
           switchMap((result: any) => [
             createSuccessAction({result}),
@@ -40,7 +41,7 @@ export class CreateEffect {
           ]),
 
           catchError((errorResponse: HttpErrorResponse) => {
-            console.log('catchError', errorResponse.error.message)
+            console.log('catchError', errorResponse)
             alert(errorResponse.error.message);
 
             return of(createFailureAction({error: errorResponse.error.message}))

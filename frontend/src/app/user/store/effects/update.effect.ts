@@ -29,6 +29,7 @@ export class UpdateEffect {
           map((result: any) => {
             console.log('update user Success:', result);
 
+            alert(result.message);
             this.dialog.closeAll();
           }),
           switchMap((result: any) => [

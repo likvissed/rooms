@@ -47,6 +47,7 @@
     "dotenv-expand": "^8.0.3",
     "faker": "^6.6.6",
     "mysql2": "^2.3.3",
+    "nestjs-i18n": "^9.0.13",
     "passport": "^0.5.2",
     "passport-jwt": "^4.0.0",
     "redis": "^4.1.0",
