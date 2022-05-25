@@ -1,3 +1,4 @@
+import { UpdateRequestInterface } from './../types/update-request.interface';
 import { UserInterface } from './../types/user.interface';
 import { EditResponseInterface } from './../types/edit-response.interface';
 import { environment } from './../../../environments/environment';
@@ -46,11 +47,11 @@ export class UserService {
     return this.http.get<EditResponseInterface>(`${environment.apiUrl}/users/${id}/edit`, { headers })
   }
 
-  update(id: number, user: any) {
+  update(data: UpdateRequestInterface) {
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
 
-    return this.http.put(`${environment.apiUrl}/users/${id}/update`, user , { headers })
+    return this.http.put(`${environment.apiUrl}/users/${data.id}/update`, data.user , { headers })
   }
 
 }

@@ -1,3 +1,4 @@
+import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserEntity } from './../entities/main/user.entity';
 import { UserService } from './user.service';
@@ -33,11 +34,16 @@ export class UserController {
   }
 
   @Post('create')
-  @UsePipes(new ValidationPipe({transform: true}))
+  // @UsePipes(new ValidationPipe({transform: true}))
   async create(@Body() create_user: CreateUserDto, @Response() response) {
     const new_user = await this.userService.create(create_user);
 
     response.send(new_user);
+
+    // return response.status(HttpStatus.OK).json({
+    //   message: 'Post has been submitted successfully!',
+    //   post: new_user,
+    // });
   }
 
   @Delete(':id/delete')
@@ -64,7 +70,7 @@ export class UserController {
   @Put(':id/update')
   async update(
     @Param('id') id: number,
-    @Body() user,
+    @Body() user: UpdateUserDto,
     @Response() response
   ) {
     response.send(await this.userService.updateUser(id, user));

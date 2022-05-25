@@ -5,7 +5,7 @@ import { ActionTypes } from '../action-types';
 
 export const createUserAction = createAction(
   ActionTypes.CREATE,
-  props<{ new_user: CreateRequestInterface }>()
+  props<{ user: CreateRequestInterface }>()
 );
 
 export const createSuccessAction = createAction(

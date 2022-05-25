@@ -1,6 +1,7 @@
+import { NewRequestInterface } from './../../types/new-request.interface';
+import { UpdateRequestInterface } from './../../types/update-request.interface';
 import { updateUserAction } from './../../store/actions/update.action';
 import { UserInterface } from './../../types/user.interface';
-import { NewRequestInterface } from './../../types/new-request.interface';
 import { async } from '@angular/core/testing';
 import { listRolesSelector, userObjectSelector } from './../../store/selectors';
 import { newUserAction } from './../../store/actions/new.action';
@@ -84,13 +85,19 @@ export class UserNewDialogComponent implements OnInit {
   }
 
   onSave() {
-    console.log('form', this.form.getRawValue());
+    console.log('form 1', this.form.getRawValue());
+    console.log('form 2', this.form.value);
 
     if (this.user_id) {
-      this.store.dispatch(updateUserAction({id: this.user_id, user: this.form.getRawValue() }));
+      const request: UpdateRequestInterface = {
+        id: this.user_id,
+        user: this.form.getRawValue()
+      }
+
+      this.store.dispatch(updateUserAction({data: request}));
     } else {
       const request: NewRequestInterface = {
-        new_user: this.form.value
+        user: this.form.getRawValue()
       }
 
       this.store.dispatch(createUserAction(request));

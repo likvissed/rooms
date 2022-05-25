@@ -1,12 +1,11 @@
-import { UserInterface } from './../../types/user.interface';
+import { UpdateRequestInterface } from './../../types/update-request.interface';
 
 import { createAction, props } from '@ngrx/store';
 import { ActionTypes } from '../action-types';
-import { CreateRequestInterface } from '../../types/create-request.interface';
 
 export const updateUserAction = createAction(
   ActionTypes.UPDATE_USER,
-  props<{id: number, user: CreateRequestInterface}>()
+  props<{ data: UpdateRequestInterface}>()
 );
 
 export const updateUserSuccessAction = createAction(

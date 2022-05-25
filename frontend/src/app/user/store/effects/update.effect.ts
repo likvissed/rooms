@@ -22,8 +22,10 @@ export class UpdateEffect {
   update$ = createEffect(() =>
     this.actions$.pipe(
       ofType(updateUserAction),
-      switchMap(({ id, user }) => {
-        return this.userService.update(id, user).pipe(
+      switchMap(({ data }) => {
+        console.log('UP', data);
+
+        return this.userService.update(data).pipe(
           map((result: any) => {
             console.log('update user Success:', result);
 

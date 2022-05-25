@@ -1,5 +1,5 @@
 export interface NewRequestInterface {
-  new_user: {
+  user: {
     tn: number
     role_id: number
   }

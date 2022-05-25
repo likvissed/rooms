@@ -27,8 +27,8 @@ export class CreateEffect {
   create$ = createEffect(() =>
     this.actions$.pipe(
       ofType(createUserAction),
-      switchMap(({new_user}) => { // { new_user }
-        return this.userService.create(new_user).pipe(
+      switchMap(({ user }) => { // { new_user }
+        return this.userService.create(user).pipe(
           map((result: any) => {
             console.log('create user Success:', result);
 
