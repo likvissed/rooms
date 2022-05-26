@@ -114,7 +114,7 @@ services:
       - mysql-data:/var/lib/mysql
     networks:
       - rooms-js--development
-    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --init-connect='SET NAMES UTF8;'
 
   redis:
     <<: *common
