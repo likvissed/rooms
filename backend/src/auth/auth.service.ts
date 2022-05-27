@@ -81,5 +81,9 @@ export default class AuthService {
       token: this.jwtService.sign(user_data)
     }
   }
+
+  async validateUser(tn: number): Promise<any> {
+    return await this.userService.findUser(tn);
+  }
   
 }

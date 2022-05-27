@@ -1,7 +1,6 @@
 import { RedisCacheService } from './shared/redis-cache-service';
 
 import { HrModule } from './hr/hr.module';
-// import { UserService } from './user/user.service';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 

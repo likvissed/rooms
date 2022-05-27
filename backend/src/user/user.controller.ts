@@ -1,11 +1,17 @@
+import { RolesGuard } from './../auth/guards/roles.guard';
+import { JwtGuard } from '../auth/guards/jwt.guard';
+import { AuthGuard } from '@nestjs/passport';
+import { Roles } from './../shared/decorators/roles.decorator';
+
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserEntity } from './../entities/main/user.entity';
 import { UserService } from './user.service';
-import { Body, Controller, Get, Header, HttpCode, HttpException, HttpStatus, Logger, Post, Delete, Put, Response, UsePipes, ValidationPipe, Param, UseFilters } from '@nestjs/common';
+import { Body, Controller, Get, Header, HttpCode, HttpException, HttpStatus, Logger, Post, Delete, Put, Response, UsePipes, ValidationPipe, Param, UseFilters, UseGuards, SetMetadata } from '@nestjs/common';
 import { I18n, I18nContext, I18nValidationExceptionFilter, i18nValidationErrorFactory } from 'nestjs-i18n';
 
 @Controller('users')
+@UseGuards(AuthGuard('jwt'))
 export class UserController {
 
   constructor(
@@ -13,6 +19,7 @@ export class UserController {
   ) {}
 
   @Get()
+  @Roles('admin')
   async getUsers(@Response() res) {
     res.send(await this.userService.findAll());
 

@@ -26,7 +26,14 @@ export class GetUsersEffect {
           }),
 
           catchError((errorResponse: HttpErrorResponse) => {
-            console.log('get users catchError:', errorResponse.error.message);
+            if (errorResponse.error.statusCode == 403) {
+              // alert('Доступ запрещен');
+              console.log('!!!! Доступ запрещен !!!!');
+              // и открыть страницу "Нет доступа"(надо ее создать)
+            }
+            console.log('get users catchError:', errorResponse);
+
+            // console.log('get users catchError:', errorResponse.error.message);
             return of(getUsersFailureAction({error: errorResponse}))
           })
         )
