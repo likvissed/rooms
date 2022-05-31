@@ -7,7 +7,7 @@ import { listRolesSelector, userObjectSelector } from './../../store/selectors';
 import { newUserAction } from './../../store/actions/new.action';
 import { BackendErrorsInterface } from './../../../shared/types/backend-errors.interface';
 import { Observable } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 
@@ -24,7 +24,7 @@ import { editUserAction } from '../../store/actions/edit.action';
   templateUrl: './user-new-dialog.component.html',
   styleUrls: ['./user-new-dialog.component.scss']
 })
-export class UserNewDialogComponent implements OnInit {
+export class UserNewDialogComponent implements OnInit, AfterViewChecked {
   form!: FormGroup;
   isSubmitting$!: Observable<boolean>
   backendErrors$!: Observable<BackendErrorsInterface | null>
@@ -37,6 +37,7 @@ export class UserNewDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<UserNewDialogComponent>,
     private formBuilder: FormBuilder,
     private store: Store,
+    private cdr: ChangeDetectorRef,
     @Inject(MAT_DIALOG_DATA) public user_id: number
   ) { }
 
@@ -45,6 +46,10 @@ export class UserNewDialogComponent implements OnInit {
     this.onInitializeValues();
     this.onInitializeFrom();
     this.onLoadData();
+  }
+
+  ngAfterViewChecked() {
+    // this.cdr.detectChanges();
   }
 
   onInitializeFrom(): void {

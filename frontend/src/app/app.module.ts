@@ -1,3 +1,4 @@
+import { LoaderInterceptor } from './shared/interceptors/loader.interceptor';
 import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
 import { ConfirmDialogComponent } from './shared/components/confirm-dialog/confirm-dialog.component';
 import { CustomPaginatorClass } from './shared/paginatior/custom-paginator-class';
@@ -64,6 +65,11 @@ import { SharedEffect } from './shared/store/effects/shared.effect';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
       multi: true
     }
   ],

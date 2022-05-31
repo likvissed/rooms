@@ -21,6 +21,7 @@ export class UserController {
   @Get()
   @Roles('admin')
   async getUsers(@Response() res) {
+    // res.setTimeout(300000); //5 minutes
     res.send(await this.userService.findAll());
     // return res.status(500).json({message: 'ОШИБОЧКА'});
 

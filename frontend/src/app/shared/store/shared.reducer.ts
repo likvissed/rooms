@@ -1,9 +1,10 @@
-import { setErrorMessageAction } from './shared.action';
+import { setErrorMessageAction, showLoadingAction, hideLoadingAction } from './shared.action';
 import { SharedStateInterface } from './../types/shared-state.interface';
 import { Action, createReducer, on } from "@ngrx/store"
 
 const initialState: any = {
-  errorMsg: ''
+  errorMsg: '',
+  isLoading: false
 }
 
 const sharedReducer = createReducer(
@@ -12,6 +13,15 @@ const sharedReducer = createReducer(
   on(setErrorMessageAction, (state, action): SharedStateInterface => ({
     ...state,
     errorMsg: action.message
+  })),
+
+  on(showLoadingAction, (state, action): SharedStateInterface => ({
+    ...state,
+    isLoading: true
+  })),
+  on(hideLoadingAction, (state, action): SharedStateInterface => ({
+    ...state,
+    isLoading: false
   }))
 )
 

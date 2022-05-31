@@ -51,15 +51,18 @@ const userReducer = createReducer(
   })),
 
   on(getUsersAction, (state): any => ({
-    ...state
+    ...state,
+    isSubmitting: true
   })),
   on(getUsersSuccessAction, (state, action): any => ({
     ...state,
-    users: action.result
+    users: action.result,
+    isSubmitting: false
   })),
   on(getUsersFailureAction, (state, action): any => ({
     ...state,
     validationsErrors: action.error,
+    isSubmitting: false
   })),
 
   on(deleteUserAction, (state): any => ({

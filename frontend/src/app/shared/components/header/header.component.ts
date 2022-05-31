@@ -1,24 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { isLoadingSelector } from './../../store/shared.selector';
+import { Store, select } from '@ngrx/store';
+import { Component, OnInit, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { AuthHelper } from '@iss/ng-auth-center';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, AfterViewChecked {
 
   isExpanded = true;
   showSubmenu: boolean = false;
   isShowing = false;
   showSubSubMenu: boolean = false;
+  isLoading$!: Observable<boolean>
 
   isAuthenticated = false;
   fio_initials = '';
   role_user = '';
 
   constructor(
-    private authHelper: AuthHelper
+    private authHelper: AuthHelper,
+    private store: Store,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -31,6 +37,12 @@ export class HeaderComponent implements OnInit {
         this.role_user = this.authHelper.getJwtPayload()['role'];
       }
     });
+
+    this.isLoading$ = this.store.pipe(select(isLoadingSelector));
+  }
+
+  ngAfterViewChecked() {
+    this.cdr.detectChanges();
   }
 
   logout() {

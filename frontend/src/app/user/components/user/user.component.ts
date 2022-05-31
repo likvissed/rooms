@@ -1,12 +1,12 @@
 import { openEditDialogUserAction } from './../../store/actions/open-edit-dialog.action';
 import { ConfirmDialogComponent } from './../../../shared/components/confirm-dialog/confirm-dialog.component';
-import { allUsersSelector } from './../../store/selectors';
+import { allUsersSelector, isSubmittingSelector } from './../../store/selectors';
 import { getUsersAction } from './../../store/actions/get-users.action';
 import { Store, select } from '@ngrx/store';
 import { GetUsersResponseInterface } from './../../types/get-user-response.interface';
 import { UserNewDialogComponent } from '../user-new-dialog/user-new-dialog.component';
 // import { MatDialogModule } from '@angular/material/dialog';
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 
@@ -21,7 +21,7 @@ import { deleteUserAction } from '../../store/actions/delete.action';
   styleUrls: ['./user.component.scss']
 })
 
-export class UserComponent implements OnInit, AfterViewInit {
+export class UserComponent implements OnInit {
   dataSource = new MatTableDataSource([]);
   displayedColumns: string[] = ['number', 'tn', 'fio', 'role', 'edit', 'delete'];
 
@@ -29,10 +29,12 @@ export class UserComponent implements OnInit, AfterViewInit {
 
   constructor(
     private dialog: MatDialog,
-    private store: Store
+    private store: Store,
+    private cdr: ChangeDetectorRef
   ) { }
 
-  ngAfterViewInit() {
+  ngAfterViewChecked() {
+    // this.cdr.detectChanges();
   }
 
   ngOnInit() {
@@ -57,23 +59,18 @@ export class UserComponent implements OnInit, AfterViewInit {
   loadUsers() {
     this.store.pipe(select(allUsersSelector))
       .subscribe((value: any) => {
-        console.log('val', value);
-
         this.dataSource = new MatTableDataSource(value);
         this.dataSource.paginator = this.paginator;
       });
   }
 
+  // TODO: При открытии возникает ошибка в консоле "ExpressionChangedAfterItHasBeenCheckedError"
   onOpenDialog(id?: number) {
-    this.store.dispatch(openEditDialogUserAction({id: id}));
-  }
-
-  onOpenUpdateDialog(id: number) {
+    // this.cdr.detectChanges();
     this.store.dispatch(openEditDialogUserAction({id: id}));
   }
 
   onDestroyUser(id: number, fio: string) {
-
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '700px',
       disableClose: true,
