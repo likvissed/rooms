@@ -27,11 +27,9 @@ export class EditEffect {
             return editUserSuccessAction({result})
           }),
 
-          catchError((errorResponse: HttpErrorResponse) => {
-            console.log('edit user catchError', errorResponse.error.message)
-            alert(errorResponse.error.message);
-            return of(editUserFailureAction({error: errorResponse.error.message}))
-          })
+          catchError((errorResponse: HttpErrorResponse) => of(
+            editUserFailureAction({error: errorResponse.error.message})
+          ))
         )
       })
     )

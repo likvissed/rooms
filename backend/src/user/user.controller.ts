@@ -22,6 +22,7 @@ export class UserController {
   @Roles('admin')
   async getUsers(@Response() res) {
     res.send(await this.userService.findAll());
+    // return res.status(500).json({message: 'ОШИБОЧКА'});
 
     // await this.userService.findAll()
     // .then((users) => {
@@ -32,6 +33,7 @@ export class UserController {
   }
 
   @Get('new')
+  @Roles('admin')
   async new(
     @Body() body,
     @Response() res
@@ -45,6 +47,7 @@ export class UserController {
   }
 
   @Post('create')
+  @Roles('admin')
   // @UsePipes(new ValidationPipe({transform: true, exceptionFactory: i18nValidationErrorFactory}))
   async create(
     @Body() create_user:CreateUserDto,
@@ -62,6 +65,7 @@ export class UserController {
   }
 
   @Delete(':id/delete')
+  @Roles('admin')
   async delete(
     @Param('id') id: number,
     @Response() response,
@@ -77,6 +81,7 @@ export class UserController {
   }
 
   @Get(':id/edit')
+  @Roles('admin')
   async edit(
     @Body() body,
     @Param('id') id: number,
@@ -88,6 +93,7 @@ export class UserController {
   }
 
   @Put(':id/update')
+  @Roles('admin')
   async update(
     @Param('id') id: number,
     @Body() user: UpdateUserDto,

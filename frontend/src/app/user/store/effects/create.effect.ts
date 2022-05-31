@@ -3,12 +3,12 @@ import { UserNewDialogComponent } from './../../components/user-new-dialog/user-
 import { getUsersAction } from './../actions/get-users.action';
 import { createSuccessAction, createFailureAction } from './../actions/create.action';
 import { UserService } from './../../services/user.service';
-import { catchError, map, switchMap, takeUntil } from 'rxjs/operators';
+import { catchError, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import { createUserAction } from '../actions/create.action';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Injectable } from "@angular/core";
 // import { MatDialogRef } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
@@ -40,12 +40,9 @@ export class CreateEffect {
             getUsersAction()
           ]),
 
-          catchError((errorResponse: HttpErrorResponse) => {
-            console.log('catchError', errorResponse)
-            alert(errorResponse.error.message);
-
-            return of(createFailureAction({error: errorResponse.error.message}))
-          })
+          catchError((errorResponse: HttpErrorResponse) => of(
+            createFailureAction({error: errorResponse.error.message})
+          ))
         )
       })
     )

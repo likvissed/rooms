@@ -31,12 +31,9 @@ export class DeleteUserEffect {
             getUsersAction()
           ]),
 
-          catchError((errorResponse: HttpErrorResponse) => {
-            console.log('delete user catchError:', errorResponse.error.message);
-
-            alert(errorResponse.error.message);
-            return of(deleteUserFailureAction({error: errorResponse}))
-          })
+          catchError((errorResponse: HttpErrorResponse) => of(
+            deleteUserFailureAction({error: errorResponse.error.message})
+          ))
         )
       })
     )

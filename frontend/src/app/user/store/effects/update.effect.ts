@@ -37,11 +37,9 @@ export class UpdateEffect {
             getUsersAction()
           ]),
 
-          catchError((errorResponse: HttpErrorResponse) => {
-            console.log('update user catchError', errorResponse.error.message)
-            alert(errorResponse.error.message);
-            return of(updateUserFailureAction({error: errorResponse.error.message}))
-          })
+          catchError((errorResponse: HttpErrorResponse) => of(
+            updateUserFailureAction({error: errorResponse.error.message})
+          ))
         )
       })
     )

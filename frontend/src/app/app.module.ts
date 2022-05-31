@@ -1,3 +1,4 @@
+import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
 import { ConfirmDialogComponent } from './shared/components/confirm-dialog/confirm-dialog.component';
 import { CustomPaginatorClass } from './shared/paginatior/custom-paginator-class';
 import { MatPaginatorIntl } from '@angular/material/paginator';
@@ -16,13 +17,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FooterComponent } from './shared/components/footer/footer.component';
 
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthCenterModule } from '@iss/ng-auth-center';
 import { AuthComponent } from './shared/components/auth/auth.component';
 
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
+import { reducers } from './shared/store/shared.reducer';
+import { SharedEffect } from './shared/store/effects/shared.effect';
+// import { reducers } from './store/reducers';
+
 
 @NgModule({
   declarations: [
@@ -51,9 +56,16 @@ import { EffectsModule } from '@ngrx/effects';
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production // Restrict extension to log-only mode
     }),
+    StoreModule.forFeature('shared', reducers),
+    EffectsModule.forFeature([SharedEffect])
   ],
   providers: [
-    { provide: MatPaginatorIntl, useClass: CustomPaginatorClass }
+    { provide: MatPaginatorIntl, useClass: CustomPaginatorClass },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

@@ -13,7 +13,6 @@ import { APP_GUARD } from '@nestjs/core';
 
 require('dotenv-expand').expand(require("dotenv").config({ path: '/app/.env' }));
 
-const passportModule = PassportModule.register({ defaultStrategy: 'jwt' });
 @Module({
   imports: [
     HttpModule,
@@ -22,7 +21,7 @@ const passportModule = PassportModule.register({ defaultStrategy: 'jwt' });
       signOptions: {expiresIn: '12h'}
     }),
     forwardRef(() => UserModule),
-    passportModule
+    PassportModule
   ],
   providers: [
     AuthService,
@@ -39,7 +38,7 @@ const passportModule = PassportModule.register({ defaultStrategy: 'jwt' });
   controllers: [
     AuthController
   ],
-  exports: [AuthService, passportModule]
+  exports: [AuthService, PassportModule]
 })
 
 export class AuthModule {}

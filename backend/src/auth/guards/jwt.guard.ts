@@ -1,5 +1,5 @@
 import { AuthGuard } from '@nestjs/passport';
-import { Injectable, ExecutionContext } from "@nestjs/common";
+import { Injectable, ExecutionContext, UnauthorizedException } from "@nestjs/common";
 
 @Injectable()
 export class JwtGuard extends AuthGuard('jwt') {
@@ -13,11 +13,13 @@ export class JwtGuard extends AuthGuard('jwt') {
 
   handleRequest(err, user, info, context: ExecutionContext) {
     // TODO: Разобраться почему в 1 раз user возвращает false
-    return user;
+    if (user === false) {
+      return;
+    }
 
-    // if (err || !user) {
-    //   throw err || new UnauthorizedException();
-    // }
-    // return user;
+    if (err || !user) {
+      throw err || new UnauthorizedException();
+    }
+    return user;
   }
 }

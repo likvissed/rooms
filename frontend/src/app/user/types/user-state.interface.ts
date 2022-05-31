@@ -5,4 +5,5 @@ export interface UserStateInterface {
   validationsErrors: null
   roles: [RoleInterface]
   user: UserInterface
+  payload: any
 }

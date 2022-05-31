@@ -12,7 +12,8 @@ const initialState: any = {
   validationsErrors: null,
   roles: null, //as any
   response: null,
-  users: null
+  users: null,
+  error: ''
 }
 
 const userReducer = createReducer(
